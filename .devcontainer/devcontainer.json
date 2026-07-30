@@ -1,0 +1,20 @@
+{
+  "name": "Ledger Lens",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "python -m pip install --upgrade pip && pip install -e '.[dev]'",
+  "postStartCommand": "nohup uvicorn ledger_lens.main:app --host 0.0.0.0 --port 8000 > /tmp/ledger-lens.log 2>&1 &",
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Ledger Lens",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "charliermarsh.ruff"]
+    }
+  }
+}

@@ -1,11 +1,37 @@
 # Ledger Lens
 
-A working document-intelligence application for invoice extraction, confidence
-routing, human correction, persistence, and normalized JSON export.
+[![CI](https://github.com/sutasmantas/invoice-extraction-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/sutasmantas/invoice-extraction-pipeline/actions/workflows/ci.yml)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
+[![MIT license](https://img.shields.io/badge/license-MIT-7C3AED)](LICENSE)
+
+**Convert invoices into reviewed, normalized JSON without hiding uncertain
+fields.**
+
+Ledger Lens combines PDF text extraction, Tesseract OCR, field normalization,
+validation, confidence routing, correction, and structured export. The useful
+unit is not “OCR text”; it is a reviewable document record that keeps the source
+transcript beside every field decision.
 
 ![Invoice field review](docs/screenshots/document-review.png)
 
+## Try the review queue
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/sutasmantas/invoice-extraction-pipeline?quickstart=1)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sutasmantas/invoice-extraction-pipeline)
+
+The Codespace installs Tesseract, installs the Python package, and starts the
+interface on port 8000. A fictional invoice is seeded with one field that needs
+review: correct it, mark it reviewed, and export the normalized record.
+
+The Render blueprint includes OCR through the repository Docker image. Free
+Render instances sleep and their SQLite review state can reset.
+
+<details>
+<summary>See the persistent review queue</summary>
+
 ![Persistent review queue](docs/screenshots/review-queue.png)
+
+</details>
 
 ## What is implemented
 

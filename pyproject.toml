@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ledger-lens"
-version = "0.1.0"
+version = "1.0.0"
 description = "Invoice extraction with OCR, validation, human review and structured export."
 readme = "README.md"
 requires-python = ">=3.11"

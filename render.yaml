@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ledger-lens-document-ai
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    autoDeployTrigger: "off"
