@@ -1,0 +1,11 @@
+services:
+  ledger-lens:
+    build: .
+    ports: ["8000:8000"]
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ledger-data:/app/data/runtime
+volumes:
+  ledger-data:
