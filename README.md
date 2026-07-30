@@ -20,8 +20,9 @@ transcript beside every field decision.
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sutasmantas/invoice-extraction-pipeline)
 
 The Codespace installs Tesseract, installs the Python package, and starts the
-interface on port 8000. A fictional invoice is seeded with one field that needs
-review: correct it, mark it reviewed, and export the normalized record.
+interface on port 8000. Four fictional invoices are seeded across ready and
+needs-review states, so the queue, correction and export workflows are useful
+immediately.
 
 The Render blueprint includes OCR through the repository Docker image. Free
 Render instances sleep and their SQLite review state can reset.
@@ -38,15 +39,15 @@ Render instances sleep and their SQLite review state can reset.
 - text extraction from PDFs with a text layer
 - Tesseract OCR for PNG, JPG, WEBP, and TIFF images
 - invoice field extraction with normalization and validation
-- confidence-based routing to a review queue
+- confidence-based routing across a multi-document review queue
 - source-linked correction with SQLite persistence
 - server-generated structured JSON export
 - honest transcript rendering for uploaded documents
 - FastAPI, automated tests, Docker, and GitHub Actions
 
-The application seeds one fictional invoice so the review flow works
-immediately. Uploaded source files are processed in a temporary directory and
-are not retained.
+The application seeds four fictional invoices: two are ready to export and two
+contain a field that needs review. Uploaded source files are processed in a
+temporary directory and are not retained.
 
 ## Run locally
 

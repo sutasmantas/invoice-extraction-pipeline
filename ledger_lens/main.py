@@ -13,7 +13,48 @@ from ledger_lens.extractor import extract_invoice, read_text
 from ledger_lens.schemas import Correction, Document, ExportPayload
 from ledger_lens.store import DocumentStore
 
-SAMPLE_TEXT = """INVOICE # INV-2026-1048
+SAMPLE_DOCUMENTS = (
+    (
+        "cloud-harbor-invoice.txt",
+        """INVOICE # CH-2026-041
+From: Cloud Harbor Systems Ltd
+VAT ID: GB123456789
+Invoice date: 2026-07-22
+Purchase order: PO-8841
+Terms: Net 15 days
+Subtotal: $8,420.00
+Tax: $1,684.00
+Total due: $10,104.00
+""",
+    ),
+    (
+        "meridian-platforms-invoice.txt",
+        """INVOICE # MP-73018
+From: Meridian Platforms SAS
+VAT ID: FR12345678901
+Invoice date: 24 Jul 2026
+Purchase order: PO-7301
+Terms: Net 45 days
+Subtotal: €21,600.00
+Tax: €4,320.00
+Total due: €25,920.00
+""",
+    ),
+    (
+        "westline-renewal-invoice.txt",
+        """INVOICE # WL-2026-882
+From: Westline Operations GmbH
+VAT ID: DE123456789
+Invoice date: 27 Jul 2026
+Terms: Net 30 days
+Subtotal: €6,800.00
+Tax: €1,292.00
+Total due: €8,092.00
+""",
+    ),
+    (
+        "sample-invoice.txt",
+        """INVOICE # INV-2026-1048
 From: Northstar Technology Services GmbH
 VAT ID: DE27844590I
 Invoice date: 18 Jul 2026
@@ -22,7 +63,9 @@ Terms: Net 30 days
 Subtotal: $13,200.00
 Tax: $1,080.00
 Total due: $14,280.00
-"""
+""",
+    ),
+)
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -31,13 +74,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(application: FastAPI) -> AsyncIterator[None]:
         store = DocumentStore(resolved.sqlite_path)
-        if not store.count():
-            store.add("sample-invoice.txt", extract_invoice(SAMPLE_TEXT, resolved.review_threshold))
+        for filename, source_text in SAMPLE_DOCUMENTS:
+            if not store.has_filename(filename):
+                store.add(filename, extract_invoice(source_text, resolved.review_threshold))
         application.state.store = store
         yield
         store.close()
 
-    app = FastAPI(title="Ledger Lens", version="0.1.0", lifespan=lifespan)
+    app = FastAPI(title="Ledger Lens", version="2.0.0", lifespan=lifespan)
 
     def store(request: Request) -> DocumentStore:
         return request.app.state.store

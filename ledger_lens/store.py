@@ -30,6 +30,13 @@ class DocumentStore:
     def count(self) -> int:
         return int(self.connection.execute("SELECT COUNT(*) FROM documents").fetchone()[0])
 
+    def has_filename(self, filename: str) -> bool:
+        row = self.connection.execute(
+            "SELECT 1 FROM documents WHERE filename = ? LIMIT 1",
+            (filename,),
+        ).fetchone()
+        return row is not None
+
     def add(self, filename: str, fields: list[ExtractedField]) -> Document:
         document_id = uuid.uuid4().hex
         created_at = datetime.now(UTC)

@@ -91,7 +91,7 @@ def extract_invoice(text: str, threshold: float) -> list[ExtractedField]:
             except ValueError:
                 normalized = value
         elif name == "payment_terms" and value:
-            confidence = 0.78
+            confidence = 0.91
         fields.append(
             ExtractedField(
                 name=name,
