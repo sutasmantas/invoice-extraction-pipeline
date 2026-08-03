@@ -1,0 +1,30 @@
+issuer: Amazon Web Services
+keywords:
+  - Amazon Web Services Invoice
+  - TOTAL AMOUNT DUE
+priority: 110
+required_fields:
+  - invoice_number
+  - date
+  - amount
+ledger_fields:
+  - invoice_number
+  - date
+  - amount
+fields:
+  invoice_number:
+    parser: regex
+    regex: '(?is)Invoice Number:\s*\nInvoice Date:\s*\nBill to Address:\s*\n(\d{8})'
+  date:
+    parser: regex
+    regex: '(?i)TOTAL AMOUNT DUE ON\s+([A-Za-z]+\s+\d{1,2}\s*,\s*\d{4})'
+    type: date
+  amount:
+    parser: regex
+    regex: '(?is)billing period[^\n]*\n\$(\d+\.\d{2})'
+    type: float
+options:
+  currency: USD
+  date_formats:
+    - '%B %d , %Y'
+  decimal_separator: '.'

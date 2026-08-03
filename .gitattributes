@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.png binary
+index.html linguist-detectable=false
+styles.css linguist-detectable=false

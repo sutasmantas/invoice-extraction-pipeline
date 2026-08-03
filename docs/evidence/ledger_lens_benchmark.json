@@ -1,0 +1,44 @@
+{
+  "claim_boundary": "Fixed public fixtures only; no arbitrary-layout, calibrated-confidence, production-accuracy, scale, or client-data claim.",
+  "environment": {
+    "invoice2data": "1.0.1",
+    "pypdfium2": "5.12.1",
+    "python": "3.11.15",
+    "tesseract": "5.5.0"
+  },
+  "fixtures": {
+    "AmazonWebServices.pdf": "2e21d50f59a97b8c3778b238d14c9d7d15f74b8d021f819f1d2ede1f5412f81b",
+    "AmazonWebServices.png": "fec56e365019c348986bfe1a6c16db13b1d16fc5962be83835bb4ac533466d6c",
+    "coolblue1.pdf": "3932539b71338f0c73d6ade499a2a00cd2f9056c60f5a87b1ef623af095e1607"
+  },
+  "gates": {
+    "append_only_corrections": true,
+    "fixture_hashes": true,
+    "real_scanned_pdf_ocr": true,
+    "source_provenance": true,
+    "text_fields_and_lines": true
+  },
+  "scanned_pdf": {
+    "amount": 4.11,
+    "elapsed_ms_observation": 5881.4,
+    "invoice_number": "42183017",
+    "method": "pdf_ocr",
+    "schema": "aws-ocr.yml"
+  },
+  "status": "PASS",
+  "text_pdf": {
+    "amount": 717.97,
+    "date": "2014-04-19",
+    "elapsed_ms_observation": 81.3,
+    "invoice_number": "993548900",
+    "method": "pdf_text",
+    "named_line_items": [
+      "Apple iPad Air Wifi 16 GB Zilver",
+      "Decoded Leather Slim Cover Apple iPad Air 2 Zwart",
+      "Mario Kart 7 3DS",
+      "Nintendo 3DS XL Wit + Blauw",
+      "Nintendo AC-adapter"
+    ],
+    "schema": "nl.be.coolblue.yml"
+  }
+}

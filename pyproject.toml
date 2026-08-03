@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ledger-lens"
+version = "2.0.0"
+description = "Invoice extraction with OCR, validation, human review and structured export."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Mantas Sutas" }]
+dependencies = [
+  "fastapi>=0.116,<1",
+  "httpx>=0.28,<1",
+  "invoice2data[pdfium]==1.0.1",
+  "pydantic-settings>=2.10,<3",
+  "pypdfium2==5.12.1",
+  "python-multipart>=0.0.20,<1",
+  "pillow>=11,<13",
+  "pytesseract>=0.3.13,<1",
+  "uvicorn[standard]>=0.35,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.4,<9", "pytest-cov>=6.2,<7", "ruff>=0.12,<1"]
+
+[project.scripts]
+ledger-lens-benchmark = "ledger_lens.benchmark:main"
+
+[tool.setuptools.packages.find]
+include = ["ledger_lens*"]
+
+[tool.setuptools.package-data]
+ledger_lens = ["templates/*.yml"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008"]

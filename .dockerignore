@@ -1,0 +1,17 @@
+.git
+.github
+.env
+.venv
+*.egg-info
+__pycache__
+.pytest_cache
+.ruff_cache
+.coverage
+data/runtime
+assets
+final_upload
+qa_*.png
+cover.html
+queue-proof.html
+review-proof.html
+slides.css

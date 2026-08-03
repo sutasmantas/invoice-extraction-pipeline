@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ledger Lens — Document Extraction and Review</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark"><span></span><span></span><span></span></div>
+          <div><strong>Ledger Lens</strong><small>DOCUMENT AI</small></div>
+        </div>
+
+        <nav aria-label="Workspace">
+          <span class="nav-label">Workspace</span>
+          <button class="nav-item active" data-view="document"><span>▤</span> Documents <i id="document-count">0</i></button>
+          <button class="nav-item" data-view="queue"><span>✓</span> Review queue <i class="alert-count" id="queue-count">0</i></button>
+          <a class="nav-item nav-link" id="api-reference" href="/docs" target="_blank" rel="noreferrer"><span>↗</span> API docs</a>
+          <button class="nav-item" disabled title="Rule editing is outside this repository"><span>⌁</span> Extraction rules</button>
+        </nav>
+
+        <section class="sidebar-group">
+          <span class="nav-label">Document types</span>
+          <button><i class="dot amber"></i> Invoices <span id="invoice-count">0</span></button>
+          <button disabled><i class="dot violet"></i> Contracts <span>—</span></button>
+          <button disabled><i class="dot cyan"></i> Forms <span>—</span></button>
+        </section>
+
+        <section class="month-card">
+          <div><span>Extraction service</span><strong id="service-state">Connecting</strong></div>
+          <div class="progress"><i></i></div>
+          <small id="service-summary">Loading persistent queue</small>
+        </section>
+
+        <div class="user">
+          <div class="avatar">LR</div>
+          <div><strong>Local reviewer</strong><small>Sample workspace</small></div>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Accounts payable</span>
+            <h1 id="page-title">Document review</h1>
+          </div>
+          <div class="top-actions">
+            <span class="system-status"><i></i> Extraction service online</span>
+            <button class="secondary" id="upload-button">Upload document</button>
+            <input id="document-upload" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.tiff,.txt,.md" hidden />
+            <button class="primary" id="export-button">Export JSON</button>
+          </div>
+        </header>
+
+        <section class="document-view" id="document-view">
+          <aside class="document-list">
+            <div class="list-head">
+              <div><h2>Recent documents</h2><span id="processed-label">Loading documents</span></div>
+            </div>
+            <label class="search">⌕ <input id="document-search" type="search" placeholder="Search documents" /></label>
+
+            <article class="document-item selected">
+              <div class="file-badge pdf">PDF</div>
+              <div class="document-copy">
+                <strong>Northstar Services</strong>
+                <span>INV-2026-1048 · $14,280.00</span>
+                <div><em class="needs-review">2 need review</em><small>Just now</small></div>
+              </div>
+            </article>
+            <article class="document-item">
+              <div class="file-badge pdf">PDF</div>
+              <div class="document-copy">
+                <strong>Brightway Logistics</strong>
+                <span>BW-88291 · $6,740.50</span>
+                <div><em class="complete">Reviewed</em><small>8 min</small></div>
+              </div>
+            </article>
+            <article class="document-item">
+              <div class="file-badge doc">DOC</div>
+              <div class="document-copy">
+                <strong>Cloud hosting agreement</strong>
+                <span>Contract · 24 fields</span>
+                <div><em class="complete">Ready</em><small>17 min</small></div>
+              </div>
+            </article>
+            <article class="document-item">
+              <div class="file-badge form">FORM</div>
+              <div class="document-copy">
+                <strong>Vendor onboarding</strong>
+                <span>Form · 18 fields</span>
+                <div><em class="complete">Reviewed</em><small>29 min</small></div>
+              </div>
+            </article>
+          </aside>
+
+          <section class="document-canvas">
+            <div class="canvas-toolbar">
+              <div><button disabled>−</button><span>100%</span><button disabled>＋</button></div>
+              <span>Page 1 of 1</span>
+              <div><button disabled>↶</button><button disabled>□</button></div>
+            </div>
+
+            <div class="paper-wrap">
+              <article class="invoice-paper">
+                <header class="invoice-head">
+                  <div class="invoice-logo">N</div>
+                  <div class="invoice-brand"><strong>NORTHSTAR</strong><span>Technology Services</span></div>
+                  <div class="invoice-title"><strong>INVOICE</strong><span data-source-field="invoice-number"># INV-2026-1048</span></div>
+                </header>
+
+                <div class="invoice-meta">
+                  <div><span>From</span><strong>Northstar Technology Services GmbH</strong><p>Friedrichstraße 68<br />10117 Berlin, Germany<br />VAT ID: <span data-source-field="vat-id">DE278445901</span></p></div>
+                  <div><span>Bill to</span><strong>Acme Operations Ltd.</strong><p>22 King Street<br />London EC2V 8AU<br />United Kingdom</p></div>
+                  <div class="dates"><p><span>Invoice date</span><strong data-source-field="invoice-date">18 Jul 2026</strong></p><p><span>Due date</span><strong>17 Aug 2026</strong></p><p><span>Purchase order</span><strong data-source-field="po-number">PO-7712</strong></p></div>
+                </div>
+
+                <table class="line-items">
+                  <thead><tr><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>Platform engineering services</strong><span>June 2026 retainer</span></td><td>1</td><td>$9,600.00</td><td>$9,600.00</td></tr>
+                    <tr><td><strong>Cloud infrastructure support</strong><span>Additional service hours</span></td><td>24</td><td>$150.00</td><td>$3,600.00</td></tr>
+                  </tbody>
+                </table>
+
+                <div class="invoice-bottom">
+                  <div class="payment">
+                    <span>Payment details</span>
+                    <p><strong>Terms:</strong> <span id="terms-value" data-source-field="payment-terms">Net 30 days</span></p>
+                    <p><strong>IBAN:</strong> DE89 3704 0044 0532 0130 00</p>
+                    <p><strong>BIC:</strong> COBADEFFXXX</p>
+                  </div>
+                  <div class="totals">
+                    <p><span>Subtotal</span><strong>$13,200.00</strong></p>
+                    <p><span>VAT (8.18%)</span><strong>$1,080.00</strong></p>
+                    <p class="grand-total"><span>Total due</span><strong data-source-field="total">$14,280.00</strong></p>
+                  </div>
+                </div>
+
+                <footer class="invoice-footer">Thank you for your business · northstar.example</footer>
+
+                <button class="bounding-box box-number active" data-field="invoice-number" aria-label="Invoice number source"></button>
+                <button class="bounding-box box-vat" data-field="vat-id" aria-label="VAT ID source"></button>
+                <button class="bounding-box box-date" data-field="invoice-date" aria-label="Invoice date source"></button>
+                <button class="bounding-box box-po" data-field="po-number" aria-label="PO number source"></button>
+                <button class="bounding-box box-terms" data-field="payment-terms" aria-label="Payment terms source"></button>
+                <button class="bounding-box box-total" data-field="total" aria-label="Total source"></button>
+              </article>
+            </div>
+          </section>
+
+          <aside class="extraction-panel">
+            <header class="extraction-head">
+              <div><span class="eyebrow">Structured output</span><h2>Extracted fields</h2></div>
+              <span class="field-count">23 fields</span>
+            </header>
+
+            <div class="extraction-summary">
+              <div><span>Document type</span><strong>Invoice</strong></div>
+              <div><span>Extraction</span><strong class="green-text">Complete</strong></div>
+              <div><span>Needs review</span><strong class="amber-text" id="review-count">2 fields</strong></div>
+            </div>
+
+            <div class="field-section">
+              <div class="section-title"><span>Invoice details</span><small>6 fields</small></div>
+
+              <button class="field-row active" data-field="invoice-number">
+                <span><small>Invoice number</small><strong>INV-2026-1048</strong></span>
+                <em class="confidence high">99%</em>
+              </button>
+              <button class="field-row" data-field="vendor">
+                <span><small>Vendor</small><strong>Northstar Technology Services GmbH</strong></span>
+                <em class="confidence high">98%</em>
+              </button>
+              <button class="field-row review-field" data-field="vat-id">
+                <span><small>VAT ID</small><strong id="vat-value">DE27844590I</strong></span>
+                <i class="warning">!</i><em class="confidence low" id="vat-confidence">71%</em>
+              </button>
+              <button class="field-row" data-field="invoice-date">
+                <span><small>Invoice date</small><strong>18 Jul 2026</strong></span>
+                <em class="confidence high">97%</em>
+              </button>
+              <button class="field-row" data-field="po-number">
+                <span><small>Purchase order</small><strong>PO-7712</strong></span>
+                <em class="confidence high">93%</em>
+              </button>
+              <button class="field-row review-field" data-field="payment-terms">
+                <span><small>Payment terms</small><strong>Net 30 days</strong></span>
+                <i class="warning">!</i><em class="confidence low" id="terms-confidence">68%</em>
+              </button>
+            </div>
+
+            <div class="field-section totals-section">
+              <div class="section-title"><span>Amounts</span><small>4 fields</small></div>
+              <button class="field-row" data-field="subtotal"><span><small>Subtotal</small><strong>$13,200.00</strong></span><em class="confidence high">99%</em></button>
+              <button class="field-row" data-field="tax"><span><small>Tax</small><strong>$1,080.00</strong></span><em class="confidence high">96%</em></button>
+              <button class="field-row" data-field="total"><span><small>Total due</small><strong>$14,280.00</strong></span><em class="confidence high">99%</em></button>
+            </div>
+
+            <section class="review-card" id="review-card">
+              <div class="review-card-head"><span>Source comparison</span><strong id="selected-confidence">99% confidence</strong></div>
+              <div class="source-value">
+                <span>Detected value</span>
+                <input id="review-input" value="INV-2026-1048" />
+              </div>
+              <p id="review-message">The selected value matches the highlighted source region.</p>
+              <button id="confirm-field">Confirm field</button>
+            </section>
+          </aside>
+        </section>
+
+        <section class="queue-view" id="queue-view" hidden>
+          <header class="queue-head">
+            <div><span class="eyebrow">Human review</span><h2>Documents needing attention</h2><p>Review only the fields where extraction confidence is below the approval threshold.</p></div>
+            <button class="primary" id="review-next">Review next document</button>
+          </header>
+
+          <div class="queue-stats">
+            <div><span class="stat-icon amber-bg" id="queue-stat">0</span><p><strong>Documents</strong><small>Need review</small></p></div>
+            <div><span class="stat-icon green-bg" id="ready-stat">0</span><p><strong>Documents</strong><small>Ready to export</small></p></div>
+            <div><span class="stat-icon violet-bg" id="fields-stat">0</span><p><strong>Extracted fields</strong><small>Persistent records</small></p></div>
+            <div><span class="stat-icon cyan-bg">80%</span><p><strong>Review threshold</strong><small>Confidence routing</small></p></div>
+          </div>
+
+          <section class="queue-card">
+            <div class="queue-toolbar"><div class="search wide">Persistent confidence queue</div><div><button class="secondary" disabled>Document type</button><button class="secondary" disabled>Confidence</button></div></div>
+            <div class="queue-row queue-labels"><span>Document</span><span>Type</span><span>Fields</span><span>Lowest confidence</span><span>Received</span><span>Status</span><span></span></div>
+            <div class="queue-row highlighted">
+              <span class="queue-document"><i class="file-badge pdf">PDF</i><span><strong>Northstar Services</strong><small>INV-2026-1048.pdf</small></span></span>
+              <span>Invoice</span><span>23 extracted · <b>2 flagged</b></span><span><em class="confidence low">68%</em> Payment terms</span><span>Just now</span><span><i class="queue-status review">Needs review</i></span><span>→</span>
+            </div>
+            <div class="queue-row">
+              <span class="queue-document"><i class="file-badge doc">DOC</i><span><strong>Cloud hosting agreement</strong><small>msa-cloud-2026.docx</small></span></span>
+              <span>Contract</span><span>24 extracted · <b>1 flagged</b></span><span><em class="confidence low">74%</em> Renewal term</span><span>17 min ago</span><span><i class="queue-status review">Needs review</i></span><span>→</span>
+            </div>
+            <div class="queue-row">
+              <span class="queue-document"><i class="file-badge pdf">PDF</i><span><strong>Brightway Logistics</strong><small>BW-88291.pdf</small></span></span>
+              <span>Invoice</span><span>21 extracted · 0 flagged</span><span><em class="confidence high">94%</em> Vendor address</span><span>8 min ago</span><span><i class="queue-status ready">Ready</i></span><span>→</span>
+            </div>
+            <div class="queue-row">
+              <span class="queue-document"><i class="file-badge form">FORM</i><span><strong>Vendor onboarding</strong><small>vendor-application-77.pdf</small></span></span>
+              <span>Form</span><span>18 extracted · 0 flagged</span><span><em class="confidence high">96%</em> Tax country</span><span>29 min ago</span><span><i class="queue-status ready">Ready</i></span><span>→</span>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast"><span>✓</span><div><strong>Structured data exported</strong><small>invoice-1048.json · 23 fields</small></div></div>
+    <script src="./browser-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

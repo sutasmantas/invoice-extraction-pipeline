@@ -1,0 +1,56 @@
+issuer: Ledger sample
+keywords:
+  - invoice
+  - total due
+priority: 100
+required_fields:
+  - invoice_number
+  - amount
+ledger_fields:
+  - invoice_number
+  - partner_name
+  - vat
+  - date
+  - purchase_order
+  - payment_terms
+  - amount_untaxed
+  - amount_tax
+  - amount
+fields:
+  invoice_number:
+    parser: regex
+    regex: '(?i)invoice\s*(?:number|no\.?|#)?\s*[:#]?\s*([A-Z0-9-]{4,})'
+  partner_name:
+    parser: regex
+    regex: '(?im)^(?:from|vendor)\s*:\s*([^\r\n]{3,80})'
+  vat:
+    parser: regex
+    regex: '(?i)VAT\s*(?:ID|number)?\s*:\s*([A-Z]{2}[A-Z0-9]{8,12})'
+  date:
+    parser: regex
+    regex: '(?i)invoice\s*date\s*:\s*(\d{1,2}\s+[A-Za-z]{3,9}\s+\d{4}|\d{4}-\d{2}-\d{2})'
+    type: date
+  purchase_order:
+    parser: regex
+    regex: '(?i)(?:purchase\s*order|PO)\s*(?:number|no\.?|#)?\s*:\s*([A-Z0-9-]{3,})'
+  payment_terms:
+    parser: regex
+    regex: '(?i)(?:payment\s*)?terms\s*:\s*(Net\s+\d+\s+days?)'
+  amount_untaxed:
+    parser: regex
+    regex: '(?im)^\s*subtotal\s*:\s*[$€£]?\s*([\d,.]+)'
+    type: float
+  amount_tax:
+    parser: regex
+    regex: '(?im)^\s*(?:tax|VAT)\s*:\s*[$€£]?\s*([\d,.]+)'
+    type: float
+  amount:
+    parser: regex
+    regex: '(?im)^\s*total\s*(?:due)?\s*:\s*[$€£]?\s*([\d,.]+)'
+    type: float
+options:
+  currency: USD
+  date_formats:
+    - '%Y-%m-%d'
+    - '%d %b %Y'
+  decimal_separator: '.'
