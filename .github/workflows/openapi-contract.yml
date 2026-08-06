@@ -1,0 +1,17 @@
+name: AdapterProof OpenAPI contract
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  openapi-contract:
+    uses: sutasmantas/api-adapter-conformance-harness/.github/workflows/openapi-contract.yml@fa0296f4294b5149605c5fbf4e809adddba76e74
+    with:
+      adapterproof-ref: fa0296f4294b5149605c5fbf4e809adddba76e74
+      config: adapterproof.openapi.json
+      consumer-install-arguments: -e ".[dev]"
+      python-version: "3.11"

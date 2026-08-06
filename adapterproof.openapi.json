@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "consumer_id": "ledger-lens",
+  "app": "ledger_lens.main:app",
+  "app_dir": ".",
+  "port": 8891,
+  "health_path": "/api/health",
+  "schema_path": "/openapi.json",
+  "data_env": {
+    "LEDGER_DATA_DIR": ".evidence/openapi/data"
+  },
+  "include_path_regex": "^/api/health$",
+  "phases": "coverage",
+  "max_examples": 1,
+  "seed": 20260806,
+  "run_timeout_seconds": 30
+}

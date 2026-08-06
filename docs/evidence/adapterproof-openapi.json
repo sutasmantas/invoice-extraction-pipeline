@@ -1,0 +1,42 @@
+{
+  "evidence_version": "1.0.0",
+  "observed_at": "2026-08-06",
+  "consumer": "ledger-lens",
+  "consumer_base_commit": "638bb35e6fd5eeea1ee5fd187b9e9c10d91671df",
+  "provider": {
+    "repository": "sutasmantas/api-adapter-conformance-harness",
+    "git_pin": "fa0296f4294b5149605c5fbf4e809adddba76e74"
+  },
+  "engine": {
+    "repository": "schemathesis/schemathesis",
+    "git_pin": "40e71c4657c79be08ea772b612a121b0e0ac7142",
+    "reported_version": "4.24.3"
+  },
+  "contract": "adapterproof.openapi.json",
+  "controls": {
+    "phase": "coverage",
+    "path_regex": "^/api/health$",
+    "selected_operations": 1,
+    "total_operations": 6,
+    "max_examples": 1,
+    "workers": 1,
+    "seed": 20260806,
+    "run_timeout_seconds": 30,
+    "disposable_data": true,
+    "separate_tool_and_consumer_interpreters": true
+  },
+  "result": {
+    "class": "NO_FINDINGS",
+    "schemathesis_exit": 0,
+    "generated_cases": 8,
+    "passed_cases": 8,
+    "elapsed_seconds": 6.792,
+    "report_sha256": "f8ea7e9954d5d273b31da4fe0b1b89f5fd6f8ecd167a2b87e7d29d239bb05875"
+  },
+  "raw_report_committed": false,
+  "limitations": [
+    "This bounded run covers only the selected health operation, not every API operation.",
+    "NO_FINDINGS means no issue was observed under these frozen controls; it is not proof that no defect exists.",
+    "The reusable GitHub workflow is configured but is not hosted evidence until the provider commit and consumer workflow are pushed and execute on GitHub."
+  ]
+}

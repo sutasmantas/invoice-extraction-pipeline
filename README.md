@@ -92,6 +92,24 @@ volume.
 
 ## Verification
 
+Ledger Lens is a real consumer of AdapterProof's reusable OpenAPI contract
+gate. The consumer file fixes the app, disposable state, exact operation,
+deterministic phase, seed, and 30-second budget; the shared GitHub workflow owns
+tool installation, process isolation, NDJSON classification, and receipt
+upload.
+
+```powershell
+<adapterproof-tool-python> -m adapterproof openapi `
+  --config adapterproof.openapi.json `
+  --consumer-python .\.venv\Scripts\python.exe `
+  --report-dir .evidence\openapi
+```
+
+This profile verifies the real `GET /api/health` response over TCP against the
+application's generated OpenAPI document. AdapterProof is pinned at
+`fa0296f4294b5149605c5fbf4e809adddba76e74`; its upstream Schemathesis engine is
+pinned independently inside the shared workflow.
+
 ```bash
 ruff check .
 pytest --cov=ledger_lens --cov-report=term-missing

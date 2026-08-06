@@ -1,5 +1,30 @@
 # LedgerLens depth execution checkpoint
 
+## Shared OpenAPI consumer slice — 2026-08-06
+
+- branch: `agent/toolbox-api-verification`
+- isolated worktree: `portfolio_demos/worktrees/ledger_lens_api_toolbox`
+- clean base: `638bb35e6fd5eeea1ee5fd187b9e9c10d91671df`
+- reusable provider: AdapterProof
+  `fa0296f4294b5149605c5fbf4e809adddba76e74`;
+- security-specific work: postponed to the final toolbox backlog;
+- license research: excluded by user direction.
+
+Current gate: **LOCAL_CONSUMER_PASS_HOSTED_EXECUTION_PENDING**.
+
+| Gate | Evidence | Status |
+| --- | --- | --- |
+| shared consumer contract | `adapterproof.openapi.json`; one selected health operation | PASS |
+| real isolated execution | 8/8 generated cases; `NO_FINDINGS`; report SHA-256 `f8ea7e99...9bb05875` | PASS |
+| committed receipt summary | `docs/evidence/adapterproof-openapi.json` | PASS |
+| clean-environment project gate | Ruff; 5 passed, 1 skipped; 74% coverage; JSON/YAML parse | PASS |
+| reusable hosted workflow | exact provider commit configured, but neither side has executed this slice on GitHub | PENDING |
+
+Exact next action: publish AdapterProof snapshot candidate
+`fa0296f4294b5149605c5fbf4e809adddba76e74` before publishing this consumer
+workflow, then preserve the hosted run URL. Local reuse is proven; hosted reuse
+must not be claimed yet.
+
 Date: 2026-08-03
 
 ## Restart point
