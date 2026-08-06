@@ -3,6 +3,7 @@ name: AdapterProof OpenAPI contract
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
