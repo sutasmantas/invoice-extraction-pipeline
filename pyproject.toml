@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.4,<9", "pytest-cov>=6.2,<7", "ruff>=0.12,<1"]
+dev = ["pytest>=8.4,<10", "pytest-cov>=6.2,<8", "ruff>=0.12,<1"]
 
 [project.scripts]
 ledger-lens-benchmark = "ledger_lens.benchmark:main"
