@@ -1,0 +1,44 @@
+# Dependabot version updates.
+#
+# Grouped and limited on purpose. Thirteen repositories times several ecosystems
+# produces a lot of noise if every bump is its own pull request, and noise is
+# what makes people stop reading them.
+#
+# The internal portfolio packages are ignored: they are vendored wheels, not
+# published on any index, so Dependabot can neither see nor update them and
+# would only report failures.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    groups:
+      github-actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: "ci"
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      python-dependencies:
+        patterns: ["*"]
+    ignore:
+      # Vendored internal wheels; not resolvable from any index.
+      - dependency-name: "deliveryguard"
+      - dependency-name: "adapterproof"
+      - dependency-name: "proofgrid"
+      - dependency-name: "portfolio-document-contract"
+    commit-message:
+      prefix: "deps"
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "build"
