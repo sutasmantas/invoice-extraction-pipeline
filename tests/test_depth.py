@@ -3,8 +3,9 @@ from pathlib import Path
 
 import pytest
 from PIL import Image
+from portfolio_document_contract import Budget, schema_sha256, validate_result
 
-from ledger_lens.extractor import extract_document
+from ledger_lens.extractor import extract_document, normalize_document
 from ledger_lens.schemas import ExtractedField
 from ledger_lens.store import DocumentStore
 
@@ -45,6 +46,38 @@ def test_public_text_pdf_uses_configurable_template_lines_and_provenance() -> No
     assert invoice_number.provenance.page == 1
     assert invoice_number.provenance.method == "pdf_text"
     assert invoice_number.provenance.template == "nl.be.coolblue.yml"
+
+
+def test_public_text_pdf_satisfies_the_shared_normalized_contract() -> None:
+    result = normalize_document(FIXTURES / "coolblue1.pdf")
+
+    validate_result(result)
+    assert schema_sha256() == "881af595d1a26f2e3c688a3c233a947222014f542a8f9879b13e91a39cec608c"
+    assert result["status"] == "success"
+    assert result["parser"]["name"] == "pdf_text"
+    assert result["parser"]["route"] == "fast"
+    assert result["document"]["capabilities"]["page_boundaries"] == "exact"
+    assert "993548900" in result["document"]["pages"][0]["text"]
+
+
+def test_shared_contract_classifies_empty_malformed_and_resource_failures(
+    tmp_path: Path,
+) -> None:
+    empty = tmp_path / "empty.txt"
+    empty.write_bytes(b"")
+    malformed = tmp_path / "malformed.pdf"
+    malformed.write_bytes(b"not a pdf")
+
+    empty_result = normalize_document(empty)
+    malformed_result = normalize_document(malformed)
+    limited_result = normalize_document(
+        FIXTURES / "coolblue1.pdf",
+        budget=Budget(max_input_bytes=1),
+    )
+
+    assert empty_result["failure"]["class"] == "empty_document"
+    assert malformed_result["failure"]["class"] == "malformed_document"
+    assert limited_result["failure"]["class"] == "resource_limit"
 
 
 @pytest.mark.skipif(shutil.which("tesseract") is None, reason="Tesseract is not on PATH")

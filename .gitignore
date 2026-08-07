@@ -6,6 +6,9 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .coverage
+build/
+dist/
+*_dist/
 .evidence/
 .schemathesis/
 data/runtime/

@@ -14,5 +14,5 @@ jobs:
     with:
       adapterproof-ref: b226f9b0f772c94d97b4d59fc7930f7502ba73ed
       config: adapterproof.openapi.json
-      consumer-install-arguments: -e ".[dev]"
+      consumer-install-arguments: vendor/portfolio_document_contract-0.1.0-py3-none-any.whl -e ".[dev]"
       python-version: "3.11"

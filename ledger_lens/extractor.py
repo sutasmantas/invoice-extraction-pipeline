@@ -14,9 +14,11 @@ from invoice2data.extract.loader import read_templates
 from invoice2data.input import pdfium as invoice_pdfium
 from invoice2data.input import text as invoice_text
 from PIL import Image
+from portfolio_document_contract import Budget
 from pytesseract import Output
 
 from ledger_lens.config import PROJECT_ROOT
+from ledger_lens.document_contract import normalize_path
 from ledger_lens.schemas import ExtractedField, ExtractedLineItem, SourceReference
 
 SUPPORTED_IMAGES = {".png", ".jpg", ".jpeg", ".webp", ".tiff"}
@@ -102,8 +104,28 @@ def extract_document(
     tesseract_cmd: str = "",
     template_dir: Path = DEFAULT_TEMPLATE_DIR,
 ) -> ExtractionResult:
-    read_result = read_document(path, tesseract_cmd)
+    contract_result, read_result = normalize_path(
+        path,
+        lambda: read_document(path, tesseract_cmd),
+    )
+    if contract_result["status"] != "success" or read_result is None:
+        failure = contract_result["failure"]
+        raise ValueError(f"{failure['class']}: {failure['message']}")
     return _extract_transcript(read_result, path, threshold, template_dir)
+
+
+def normalize_document(
+    path: Path,
+    tesseract_cmd: str = "",
+    *,
+    budget: Budget | None = None,
+) -> dict[str, Any]:
+    result, _read_result = normalize_path(
+        path,
+        lambda: read_document(path, tesseract_cmd),
+        budget=budget,
+    )
+    return result
 
 
 def extract_invoice(

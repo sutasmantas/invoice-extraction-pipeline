@@ -1,0 +1,14 @@
+{
+  "schema_version": "ledger-lens.document-contract-consumer.v1",
+  "status": "PASS",
+  "implementation_commit": "84389783f9bccdbc6af37523d6b3142d880929e0",
+  "provider_commit": "fc0c31755258ad8860d0690b9bd7c4fc6b1f8463",
+  "wheel_sha256": "b9a52899661f423911c4c5adfcf891e7741cdf8ae4dcbdc787a059fbc5c645b4",
+  "tests": {"passed": 7, "skipped_for_missing_windows_tesseract": 1, "coverage_percent": 75},
+  "container": {"status": "PASS", "gates": 5, "tesseract": "5.5.0", "text_pdf_ms": 132.5, "ocr_pdf_ms": 7695.6},
+  "package": {"build": "PASS", "twine_strict": "PASS"},
+  "rollback_baseline": "fa4281b6e4005d32af1488487222a6f658454aaf",
+  "rollback_tests_passed": 5,
+  "rollback_tests_skipped": 1,
+  "claim_boundary": "Fixed public invoice fixtures and local/container execution only."
+}

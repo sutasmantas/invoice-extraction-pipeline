@@ -1,5 +1,26 @@
 # LedgerLens depth execution checkpoint
 
+## Phase 5 document-contract extension — 2026-08-06
+
+Status: `LOCAL_PASS`. The Atlas-owned `portfolio-document-contract` wheel is
+reproducibly built from provider commit
+`fc0c31755258ad8860d0690b9bd7c4fc6b1f8463` and vendored at SHA-256
+`b9a52899661f423911c4c5adfcf891e7741cdf8ae4dcbdc787a059fbc5c645b4`.
+Ledger's real extraction path now emits and validates the frozen normalized
+success/error envelope before invoice-specific templates and review policy.
+Local Ruff and focused/native tests pass: 7 passed, one existing environment-
+conditional OCR test skipped, with 75% measured coverage. The Linux container
+build exposed and fixed an invalid renamed-wheel install path, then its real
+PDFium/Tesseract benchmark passed all five gates: scanned invoice `42183017`
+and `4.11` in 6,727.5 ms; text invoice `993548900` and `717.97` in 106.3 ms.
+Wheel/sdist build and strict Twine pass. Detached checkout at `8438978`
+repeated the 7-pass/1-skip test, Ruff, format, build, strict Twine, exact-wheel,
+and five-gate container benchmark. Baseline `fa4281b` has no shared-contract
+dependency and passes 5 native tests with its expected OCR skip. The local
+consumer gate is closed; no hosted-execution or arbitrary-document claim is
+made. Machine-readable evidence is in
+`docs/evidence/document-contract-phase5.json`.
+
 ## Shared OpenAPI consumer slice — 2026-08-06
 
 - branch: `agent/toolbox-api-verification`

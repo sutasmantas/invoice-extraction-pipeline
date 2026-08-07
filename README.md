@@ -58,6 +58,21 @@ temporary directory and are not retained.
 ## Run locally
 
 Requirements: Python 3.11+ and Tesseract for image and image-only PDF OCR.
+Install the vendored Atlas-owned contract wheel before the project:
+
+```powershell
+python -m pip install vendor\portfolio_document_contract-0.1.0-py3-none-any.whl
+python -m pip install -e ".[dev]"
+```
+
+Every production extraction now crosses the versioned normalized-document
+contract before invoice-specific field, review, and correction policy runs.
+The vendored wheel SHA-256 is
+`b9a52899661f423911c4c5adfcf891e7741cdf8ae4dcbdc787a059fbc5c645b4`,
+reproducibly built from Atlas provider commit
+`fc0c31755258ad8860d0690b9bd7c4fc6b1f8463`;
+its canonical schema SHA-256 is
+`881af595d1a26f2e3c688a3c233a947222014f542a8f9879b13e91a39cec608c`.
 
 ```bash
 python -m venv .venv

@@ -12,6 +12,7 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: sudo apt-get update && sudo apt-get install -y tesseract-ocr
+      - run: pip install vendor/portfolio_document_contract-0.1.0-py3-none-any.whl
       - run: pip install ".[dev]"
       - run: ruff check .
       - run: pytest --cov=ledger_lens --cov-report=term-missing

@@ -3,6 +3,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
+COPY vendor/portfolio_document_contract-0.1.0-py3-none-any.whl /tmp/portfolio_document_contract-0.1.0-py3-none-any.whl
+RUN pip install --no-cache-dir /tmp/portfolio_document_contract-0.1.0-py3-none-any.whl \
+    && rm /tmp/portfolio_document_contract-0.1.0-py3-none-any.whl
 COPY pyproject.toml README.md ./
 COPY ledger_lens ./ledger_lens
 RUN pip install --no-cache-dir .

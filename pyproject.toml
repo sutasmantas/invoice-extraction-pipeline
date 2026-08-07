@@ -18,6 +18,7 @@ dependencies = [
   "pypdfium2==5.12.1",
   "python-multipart>=0.0.20,<1",
   "pillow>=11,<13",
+  "portfolio-document-contract==0.1.0",
   "pytesseract>=0.3.13,<1",
   "uvicorn[standard]>=0.35,<1",
 ]
