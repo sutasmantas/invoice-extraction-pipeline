@@ -140,3 +140,34 @@ Do not start UI polish. The next portfolio decision is depth rank 6,
 SignalRoom real-data feasibility, and it remains gated on a real, reusable
 dataset/target plus foundation and component-level GitHub audits; do not start
 blank or invent a target.
+
+## Technique-ceiling dossier closure — 2026-08-04
+
+- Research exit gate: `PASS`; Ledger Lens technique experiments remain
+  `PARTIAL`.
+- Isolated worktree:
+  `portfolio_demos/worktrees/ledger_lens_technique_dossier`.
+- Branch: `agent/ledger-lens-technique-dossier`, based on clean Ledger Lens
+  `main` commit `638bb35e6fd5eeea1ee5fd187b9e9c10d91671df`.
+- Dossier commit: `91f287736056746f4c928bd714221d27cc72fc93`.
+- Required artifacts: `TECHNIQUE_TAXONOMY.md`, `EVIDENCE_MATRIX.csv`,
+  `GITHUB_IMPLEMENTATION_AUDIT.md`, `BENCHMARK_DESIGN.md`,
+  `RESEARCH_DECISION.md`, and the expanded `docs/EXPERTISE_NOTES.md`.
+- Expertise disposition: central card **Calibrate review routing per extraction
+  path** was added to `UPWORK_EXPERTISE_INDEX.md`; model-routing and audit-trail
+  notes explicitly reuse the existing extractor-selection, focused-parser, and
+  uncertain-field cards.
+- Verification: all six artifacts exist; the CSV imports as 18 candidates with
+  all required columns and no blank candidate/status/disposition; all eleven
+  systematic evidence rows are `PASS`; `git diff --check` passes. Local
+  evidence references in the dossier resolve. Application tests were not
+  rerun because this slice changes research/checkpoint Markdown and CSV only.
+- Decision: retain invoice2data/PDFium/Tesseract as the stable-layout control.
+  Admit L0 path-specific calibrated selective review first. L1 layout parsing,
+  L2 VLM escalation, and L3 long-document localization remain conditional.
+- Scope stopped before: candidate implementation, benchmark execution,
+  parser/VLM integration, UI/visual polish, central portfolio site, merge,
+  push, or deployment.
+- Exact next cross-portfolio action: complete the ProofGrid systematic dossier
+  in its own isolated worktree. Do not start Ledger L0 from this checkpoint.
+  ContextSidecar is complete elsewhere and is outside this stream.

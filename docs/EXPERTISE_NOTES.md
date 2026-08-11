@@ -111,3 +111,168 @@ than assuming benchmark accuracy transfers.
   rasterization removed more custom work with much less integration surface.
 - Deeper evidence: open `docs/PROJECT_START.md` for the component audit and the
   benchmark JSON for case-level results and claim limits.
+
+---
+
+# Ledger Lens technique-ceiling expertise notes
+
+Date: 2026-08-04
+
+## Calibrate review routing per extraction path
+
+### Client trigger
+
+- Job wording: confidence scores, human-in-the-loop review, production-ready
+  extraction, low-error automation, or multiple OCR/model providers.
+- System condition: text PDFs, scanned pages and model/VLM fallbacks feed one
+  review queue but fail in different ways.
+
+### Failure symptom or unanswered choice
+
+Ledger's current field score largely inherits text/OCR routing confidence. That
+score is useful for a demo but is not a calibrated probability that a field is
+correct. One threshold can silently accept a high-confidence recognition or
+schema error and over-review an easy text-layer field.
+
+### Competing options
+
+| Option | Why plausible | Main risk |
+| --- | --- | --- |
+| one global threshold | simple and already implemented | conflates OCR, extraction, validation and path-specific errors |
+| path-specific deterministic evidence | cheap, auditable and uses existing completeness/provenance/business checks | may not rank interacting degradation failures well |
+| calibrated small model | can combine correlated features and optimize risk/coverage | needs leakage-safe labelled data and monitoring |
+| parser/model agreement | observable without field labels at inference | correlated systems can agree on the same wrong value |
+
+### Controlled comparison
+
+Freeze layout families before splitting data; pair clean pages with rotation,
+blur, compression, contrast and crop variants. Measure automatic-accept error,
+review coverage, risk-coverage area, Brier score and calibration error for each
+extraction path. A policy passes only if no known incorrect document is marked
+ready and review workload falls without a required-slice regression.
+
+### Decision rule
+
+Start with path-specific deterministic evidence. Add a small calibration model
+only when deterministic features miss the frozen gate. Never present OCR token
+confidence, LLM self-confidence or parser agreement as field correctness
+without held-out calibration for that route.
+
+### Delivery control
+
+Version the policy, feature schema, calibration split and threshold. Route
+missing required fields, validation failures, absent provenance and unsupported
+layouts to review regardless of score. Recalibrate when the parser/model,
+scanner distribution, language, target schema or review cost changes.
+
+### Proposal-safe insight
+
+I treat confidence as a routing decision, not a decorative model number. I
+calibrate text, OCR and fallback paths separately against held-out layouts and
+report the error that remains among automatically accepted fields alongside
+the review workload.
+
+### Evidence and interview follow-up
+
+- Evidence: `TECHNIQUE_TAXONOMY.md`, `EVIDENCE_MATRIX.csv`,
+  `BENCHMARK_DESIGN.md` L0 and `RESEARCH_DECISION.md`.
+- Likely question: Why not choose 0.8 and review everything below it?
+- Short answer: 0.8 has different meanings across OCR, deterministic parsing
+  and VLM outputs. The delivery question is selective risk at a given review
+  budget, measured on unseen layouts and acquisition failures.
+- Central disposition: **new card** — `Calibrate review routing per extraction
+  path`.
+
+## Use model/VLM extraction as a routed escalation, not the document default
+
+### Client trigger
+
+- Job wording: changing layouts, visually complex documents, tables, many
+  vendors, or an OCR/LLM/VLM pipeline.
+- System condition: the cheap template path fails on representative layouts
+  even though the needed information is visible.
+
+### Failure symptom or unanswered choice
+
+Broad document-model benchmarks tempt teams to replace a small reliable path
+with one expensive parser or VLM. Current evidence is contradictory: some
+business-document results find image-only models competitive with OCR-assisted
+pipelines, while difficult and industrial document studies still expose OCR,
+reading-order, layout and long-document failures. The winner depends on the
+document and acceptance contract.
+
+### Competing options
+
+| Option | Good operating region | Main risk |
+| --- | --- | --- |
+| template + OCR | stable vendor layouts, CPU delivery | poor transfer to unseen structure |
+| layout-aware parser | reading order, blocks and tables | parser integration does not itself solve schema KIE |
+| direct-image VLM | visually varied pages and flexible schemas | cost, drift, hallucination, privacy and weak provenance |
+| page retrieval then VLM | long documents with sparse relevant pages | retrieval misses become extraction misses |
+
+### Decision rule
+
+Retain the cheap measured path as control. Activate one maintained parser only
+for predeclared layout/table failures. Activate a VLM only for residual cases it
+can recover with schema validation and source evidence. Activate page retrieval
+only for a measured long-document problem. No family becomes universal through
+leaderboard rank alone.
+
+### Delivery control
+
+Pin each route and expose the selected method. Require explicit unsupported
+outputs, identical typed schemas, provenance, repeated-run stability and
+quality/cost slices. Do not integrate several broad parsers before one frozen
+candidate closes the failure category.
+
+### Proposal-safe insight
+
+I use the smallest extraction path that meets the document's operating region,
+then route only the failures that justify a layout model or VLM. That keeps the
+review and export contract stable while making quality, latency and provider
+cost directly comparable.
+
+### Evidence and interview follow-up
+
+- Evidence: `GITHUB_IMPLEMENTATION_AUDIT.md`, `BENCHMARK_DESIGN.md` L1–L3 and
+  `RESEARCH_DECISION.md`.
+- Likely question: Why not just send every page to the strongest VLM?
+- Short answer: it hides easy deterministic wins, adds cost/privacy/version
+  risk, and still needs validation and routing. The stronger claim is measured
+  escalation on the failure set it actually fixes.
+- Central disposition: **duplicate** of the existing `Detect document path
+  before selecting extractor` and `Reuse focused parser before assembling
+  document AI stack` cards; do not add another central card.
+
+## Keep uncertainty routing and auditability coupled
+
+### Client trigger
+
+- Job wording: reviewer approval, correction audit, provenance, source
+  highlights, export guarantees, or compliance-sensitive document processing.
+
+### Failure symptom or unanswered choice
+
+A review queue is not evidence of safe automation when fields lack source
+references, corrections overwrite history, or exports ignore unresolved
+status. Adding a more capable parser does not repair those product controls.
+
+### Decision rule
+
+Every extraction route must preserve source evidence, version/method, explicit
+missing values, immutable corrections and export readiness. Quality candidates
+that cannot normalize into those controls fail before UI or throughput work.
+
+### Proposal-safe insight
+
+I tie uncertain fields to evidence and an append-only correction trail, and I
+block ready export until the review contract is satisfied. That makes a model
+upgrade replaceable without weakening auditability.
+
+### Evidence and disposition
+
+- Evidence: `tests/test_api.py`, `tests/test_depth.py`,
+  `docs/evidence/ledger_lens_benchmark.json` and
+  `GITHUB_IMPLEMENTATION_AUDIT.md`.
+- Central disposition: **duplicate** of `Route uncertain fields to review`; do
+  not add another central card.
