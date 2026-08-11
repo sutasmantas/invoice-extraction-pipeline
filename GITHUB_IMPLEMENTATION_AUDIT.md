@@ -12,7 +12,7 @@ history, or export contract. Tiny adapters, scoring glue, and product-specific
 validation remain local when importing a framework would cost more than the
 behavior it replaces.
 
-License was deliberately excluded from discovery, ranking, and rejection. The
+The
 user's private portfolio use makes implementation fitness the relevant filter.
 
 ## Host and baseline
