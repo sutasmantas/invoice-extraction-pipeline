@@ -1,5 +1,7 @@
 # LedgerLens heterogeneous-document decision note
 
+**Verification:** [claim-to-artifact map and rerun commands](https://sutasmantas.github.io/evidence/#ledger-lens) · [machine-readable receipt](https://sutasmantas.github.io/evidence/receipt.json)
+
 ## Client trigger
 
 - Job wording: extract structured invoice/document fields, scanned PDFs, line

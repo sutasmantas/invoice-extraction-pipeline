@@ -1,5 +1,7 @@
 # Ledger Lens
 
+**Verification:** [claim-to-artifact map and rerun commands](https://sutasmantas.github.io/evidence/#ledger-lens) · [machine-readable receipt](https://sutasmantas.github.io/evidence/receipt.json)
+
 [![CI](https://github.com/sutasmantas/invoice-extraction-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/sutasmantas/invoice-extraction-pipeline/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![MIT license](https://img.shields.io/badge/license-MIT-7C3AED)](LICENSE)
