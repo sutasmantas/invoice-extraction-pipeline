@@ -15,7 +15,7 @@ dependencies = [
   "httpx>=0.28,<1",
   "invoice2data[pdfium]==1.0.1",
   "pydantic-settings>=2.10,<3",
-  "pypdfium2==5.12.1",
+  "pypdfium2==5.13.0",
   "python-multipart>=0.0.20,<1",
   "pillow>=11,<13",
   "portfolio-document-contract==0.1.0",
@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.4,<9", "pytest-cov>=6.2,<7", "ruff>=0.12,<1"]
+dev = ["pytest>=8.4,<10", "pytest-cov>=6.2,<8", "ruff>=0.12,<1"]
 
 [project.scripts]
 ledger-lens-benchmark = "ledger_lens.benchmark:main"
